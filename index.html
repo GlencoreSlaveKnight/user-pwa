@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estado de Alerta</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="main-wrapper">
+      <div class="logo-wrapper">
+        <img src="images/antamina-logo.png" alt="Antamina Logo">
+      </div>
+
+      <div id="status-card" class="mini-container status-error">
+        <h1>Estado de la alerta:</h1>
+        <div id="status">Cargando...</div>
+        <p id="last-updated"></p>
+      </div>
+
+      <div id="locations-container" class="mini-container" style="display: none;">
+        <h2>Zonas Afectadas</h2>
+        <ul id="locations-list"></ul>
+      </div>
+    
+      <div id="details-container" class="mini-container" style="display: none;">
+        <img id="detail-siren-img" src="" alt="Siren Icon" style="display: none;">
+        
+        <h2 id="detail-alert-name" class="detail-h2"></h2> 
+        <button id="detail-action-button" class="action-button"></button>
+
+        <ul class="detail-list">
+          <li id="protocol"></li>
+          <li id="storm-radius"></li>
+          <li id="details"></li>
+        </ul>
+
+        <button id="back-btn" class="return-button" style="margin-top: 15px;">
+          Volver
+        </button>
+      </div>
+    </div>
+    
+    <script src="app.js"></script>
+  </body>
+</html>

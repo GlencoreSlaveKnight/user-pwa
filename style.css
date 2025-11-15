@@ -1,0 +1,289 @@
+/* --- Google Font Import --- */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* --- Global Styles --- */
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+body {
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  /* Prevents scrolling/bouncing on mobile */
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* --- Layout Wrappers --- */
+.main-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.logo-wrapper {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.logo-wrapper img {
+  max-width: 125px;
+  height: auto;
+}
+.mini-container {
+  background-color: #fff;
+  padding: 20px 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  width: 100%;
+  max-width: 425px;
+  margin-bottom: 20px;
+}
+
+/* --- Headings & Text --- */
+h1 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.5em;
+  color: #333;
+}
+h2 {
+  margin-top: 10px;
+  margin-bottom: 15px;
+  font-size: 1.2em;
+  color: #555;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+/* --- Worker Status Card Styles --- */
+.status-card {
+  padding: 25px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  color: #fff;
+}
+.status-card h1 {
+  margin: 0;
+  color: #fff;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.status-card #status {
+  font-size: 2.5em;
+  font-weight: 700;
+  margin-top: 5px;
+}
+.status-card #last-updated {
+  font-size: 0.9em;
+  color: #fff;
+  opacity: 0.8;
+  margin: 10px 0 0 0;
+}
+
+/* Status Colors */
+.status-roja { background-color: #d9534f; }
+.status-naranja { background-color: #f0ad4e; }
+.status-amarilla { background-color: #f0e04e; }
+.status-green { background-color: #5cb85c; }
+.status-probando { background-color: #5bc0de; }
+.status-error { background-color: #777; }
+
+
+/* --- Admin Button Styles --- */
+.admin-button {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 10px;
+  font-size: 1.1em;
+  font-weight: 700;
+  color: #fff;
+  background-color: #555;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+.admin-button:hover {
+  opacity: 0.85;
+}
+
+/* Button Colors */
+.admin-button.red { background-color: #d9534f; }
+.admin-button.orange { background-color: #f0ad4e; }
+.admin-button.yellow { background-color: #f0e04e; color: #333; }
+.admin-button.green { background-color: #5cb85c; }
+.admin-button.testing { background-color: #5bc0de; }
+
+/* --- Checkbox/Location List Styles --- */
+.locations-list {
+  text-align: left;
+  padding: 0 10px;
+  margin-top: 15px;
+  font-size: 1.1em;
+}
+.locations-list div {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+.locations-list label {
+  margin-left: 10px;
+}
+.locations-list input[type="checkbox"] {
+  width: 1.3em;
+  height: 1.3em;
+}
+#locations-list {
+  text-align: left;
+  padding-left: 30px;
+  margin-top: 15px;
+}
+
+/* --- New Styles from Stylesheet.html --- */
+.admin-button.dimmed {
+  opacity: 0.4;
+}
+.admin-button.selected {
+  opacity: 1;
+}
+.submit-button {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  margin-top: 20px;
+  font-size: 1.2em;
+  font-weight: 700;
+  color: #fff;
+  background-color: #007bff; /* A standard "submit" blue */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+.submit-button:hover {
+  opacity: 0.85;
+}
+.submit-button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.return-button {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  margin-top: 20px;
+  font-size: 1.2em;
+  font-weight: 700;
+  color: #fff;
+  background-color: #2596be; /* A standard "submit" blue */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+.return-button:hover {
+  opacity: 0.85;
+}
+.return-button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+/* --- Styles for New Siren Image --- */
+#detail-siren-img {
+  max-width: 60px;
+  height: auto;
+  /* --- ADD THESE TWO LINES --- */
+  display: block;
+  margin: 0 auto 10px auto; /* Centers it and adds 10px margin at the bottom */
+}
+
+/* --- New Text Color Classes --- */
+.text-roja {
+  color: #d9534f; /* Matches .status-roja */
+  font-weight: 700;
+}
+.text-naranja {
+  color: #f0ad4e; /* Matches .status-naranja */
+  font-weight: 700;
+}
+.text-amarilla {
+  color: #333; /* Dark text for light yellow, matches button */
+  font-weight: 700;
+}
+.text-green {
+  color: #5cb85c; /* Matches .status-green */
+  font-weight: 700;
+}
+.text-probando {
+  color: #5bc0de; /* Matches .status-probando */
+  font-weight: 700;
+}
+
+/* --- Styles for Detail View (new from mock-up) --- */
+.detail-h2 {
+  font-size: 1.8em; /* Larger heading */
+  font-weight: 700;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.action-button {
+  display: inline-block; /* For better sizing */
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  font-size: 1.1em;
+  font-weight: 700;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: default; /* Not clickable for now */
+  transition: background-color 0.2s ease;
+  text-transform: uppercase;
+}
+
+/* Specific button colors */
+.action-button.red { background-color: #d9534f; }
+.action-button.orange { background-color: #f0ad4e; }
+.action-button.yellow { background-color: #f0e04e; color: #333; } /* Dark text for yellow */
+.action-button.green { background-color: #5cb85c; }
+.action-button.testing { background-color: #5bc0de; }
+
+.detail-list {
+  list-style: none; /* Remove default bullet points */
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+.detail-list li {
+  margin-bottom: 15px;
+  font-size: 1.1em;
+  color: #555;
+  line-height: 1.4;
+  position: relative;
+  padding-left: 20px; /* Space for custom bullet */
+}
+.detail-list li:last-child {
+  margin-bottom: 0; /* No margin on the last item */
+}
+.detail-list li::before {
+  content: '-'; /* Custom bullet point */
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #555; /* Default bullet color */
+  font-weight: 700;
+}

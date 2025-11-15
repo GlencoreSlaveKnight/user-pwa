@@ -1,0 +1,21 @@
+{
+  "name": "Alerta Antamina",
+  "short_name": "Alerta",
+  "description": "Aplicación de alertas emitidas por tormentas eléctricas en Antamina.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#f4f4f4",
+  "icons": [
+    {
+      "src": "images/Logo 192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/Logo 512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
