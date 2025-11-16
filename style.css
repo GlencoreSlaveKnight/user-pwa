@@ -14,8 +14,8 @@ body {
   margin: 0;
   padding: 0;
   /* Prevents scrolling/bouncing on mobile */
-  height: 100vh;
-  overflow: hidden;
+  //height: 100vh;
+  //overflow: hidden;
 }
 
 /* --- Layout Wrappers --- */
@@ -23,7 +23,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   padding: 20px;
 }
@@ -338,4 +338,32 @@ h2 {
   max-width: 60px;
   height: auto;
   margin: 0 auto 10px auto;
+}
+
+/* --- Styles for Collapsible Info Blocks --- */
+/* --- Styles for Collapsible Info Blocks --- */
+.info-block-clickable {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.info-block-clickable:hover {
+  background-color: #f9f9f9; /* Slight hover effect */
+}
+
+/* --- HIDE THESE BY DEFAULT --- */
+.info-block-clickable .info-details,
+.info-block-clickable .action-button {
+  display: none; /* Hide details AND button by default */
+  margin-top: 20px; 
+}
+
+/* --- SHOW THEM WHEN PARENT IS .active --- */
+.info-block.active .info-details,
+.info-block.active .action-button {
+  display: block; 
+}
+
+/* --- Fix for button's original style --- */
+.info-block.active .action-button {
+  display: inline-block; /* Buttons look better as inline-block */
 }

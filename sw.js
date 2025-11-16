@@ -1,5 +1,5 @@
 // --- 1. CHANGE THIS VERSION ---
-const CACHE_NAME = 'v7-antamina-alertas'; // Incremented version
+const CACHE_NAME = 'v10-antamina-alertas'; // Incremented version
 const API_DOMAIN = 'script.google.com';
 
 const urlsToCache = [

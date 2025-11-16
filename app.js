@@ -55,6 +55,16 @@ document.addEventListener('DOMContentLoaded', () => {
     homeView.style.display = 'none';
   });
 
+  // --- "Información" Tab Accordion ---
+  const infoBlocks = document.querySelectorAll('.info-block-clickable');
+  
+  infoBlocks.forEach(block => {
+    block.addEventListener('click', () => {
+      // This toggles the 'active' class on the block you tapped
+      block.classList.toggle('active');
+    });
+  });
+
   // --- (Existing) Click listener for the status card ---
   const statusCard = document.getElementById('status-card');
   statusCard.addEventListener('click', () => {
