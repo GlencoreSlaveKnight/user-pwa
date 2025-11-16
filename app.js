@@ -1,6 +1,7 @@
 // --- IMPORTANT ---
 const API_URL = "https://script.google.com/macros/s/AKfycbw9HsdlY7057hnfXm06std0bjUecrM4ztlh25M1lxbdOYioP5xbsYNJm33L49aR85vJ6w/exec"; 
 let previousStatus = null;
+const alertSound = new Audio('sounds/alarm.mp3');
 
 // --- Define all text content ---
 const redProtocol = "EVACUAR";
@@ -73,6 +74,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('details-container').style.display = 'block';
     console.log('Status card tapped, vibration enabled.');
   });
+
+  alertSound.play();
+  alertSound.pause();
+  alertSound.currentTime = 0;
   
   // --- (Existing) New listener for the "Back" button ---
   const backButton = document.getElementById('back-btn');
@@ -147,9 +152,11 @@ function showStatus(data) {
     protocolText.innerHTML = redItem1;
     stormRadiusText.innerHTML = redItem2; 
 
-    if (status !== previousStatus && 'vibrate' in navigator) {
-        navigator.vibrate([500, 100, 500]);
+    if (status !== previousStatus && 'vibrate' in navigator) {  
+      navigator.vibrate([500, 200, 500, 200, 500]);
+      alertSound.play();
     }
+    
   } 
   else if (status == 'NARANJA') {
     statusCard.classList.add('status-naranja');

@@ -1,5 +1,5 @@
 // --- 1. CHANGE THIS VERSION ---
-const CACHE_NAME = 'v10-antamina-alertas'; // Incremented version
+const CACHE_NAME = 'v11-antamina-alertas'; // Incremented version
 const API_DOMAIN = 'script.google.com';
 
 const urlsToCache = [
@@ -18,6 +18,8 @@ const urlsToCache = [
   '/images/Yellow siren.png',
   '/images/Green siren.png',
   '/images/Blue siren.png', // For "Probando"
+  
+  '/sounds/alarm.mp3',
   
   'https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'
   
