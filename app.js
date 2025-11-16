@@ -1,49 +1,75 @@
 // --- IMPORTANT ---
-// Paste your new Apps Script Web App URL here
 const API_URL = "https://script.google.com/macros/s/AKfycbw9HsdlY7057hnfXm06std0bjUecrM4ztlh25M1lxbdOYioP5xbsYNJm33L49aR85vJ6w/exec"; 
 let previousStatus = null;
+
+// --- Define all text content ---
 const redProtocol = "EVACUAR";
 const redItem1 = "Se emite cuando se detectan rayos dentro del área crítica, entre 0 y 8 km.";
-const redItem2 = "La alerta puede activarse directamente en rojo, sin pasar por las anteriores, debido a la topografía y al radio de detección de los equipos.";
+const redItem2 = "Se suspenden inmediatamente todos los trabajos al aire libre y el personal debe dirigirse a los refugios identificados";
 const orangeProtocol = "SUSPENDER OPERACIONES"
 const orangeItem1 = "Indica caída de rayos en el rango de 8 a 16 km.";
 const orangeItem2 = "Todo trabajo de izaje debe detenerse; si hay una carga suspendida, deberá asegurarse en una posición segura.";
 const yellowProtocol = "ATENTO A COMUNICACIONES"
 const yellowItem1 = "Se activa al detectar rayos entre 16 y 32 km de distancia.";
 const yellowItem2 = "Supervisores y trabajadores deben mantener observación constante del cielo y estar atentos a las comunicaciones radiales.";
-const greenProtocol = "DESPEJADO"
+const greenProtocol = "RESUMIR LABORES"
 const greenItem1 = "No se detectan rayos en un radio de 32 km";
-const greenItem2 = "Proceder con las labores";
+const greenItem2 = "Continuar con las operaciones, no se requiere ninguna acción";
+const probandoProtocol = "PRUEBA";
+const probandoItem1 = "Esta es una alerta de prueba del sistema.";
+const probandoItem2 = "Continuar con las operaciones, no se requiere ninguna acción";
+
 
 document.addEventListener('DOMContentLoaded', () => {
   
-  // Register the service worker for PWA functionality
+  // Register the service worker
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js')
       .then(reg => console.log('Service Worker registered', reg))
       .catch(err => console.error('Service Worker registration failed', err));
   }
 
-  // Click listener for the status card
+  // --- Get navigation elements ---
+  const navInicio = document.getElementById('nav-inicio');
+  const navInfo = document.getElementById('nav-info');
+  const homeView = document.getElementById('home-view');
+  const infoView = document.getElementById('info-view');
+
+  // --- "Inicio" tab click listener ---
+  navInicio.addEventListener('click', () => {
+    // Set button active
+    navInicio.classList.add('active');
+    navInfo.classList.remove('active');
+    // Show/hide views
+    homeView.style.display = 'block';
+    infoView.style.display = 'none';
+  });
+
+  // --- "Información" tab click listener ---
+  navInfo.addEventListener('click', () => {
+    // Set button active
+    navInfo.classList.add('active');
+    navInicio.classList.remove('active');
+    // Show/hide views
+    infoView.style.display = 'block';
+    homeView.style.display = 'none';
+  });
+
+  // --- (Existing) Click listener for the status card ---
   const statusCard = document.getElementById('status-card');
   statusCard.addEventListener('click', () => {
-    // This tap "unlocks" the vibration API.
     document.getElementById('status-card').style.display = 'none';
     document.getElementById('locations-container').style.display = 'none';
-    // --- Correction: typo 'details-container' ---
     document.getElementById('details-container').style.display = 'block';
-    
     console.log('Status card tapped, vibration enabled.');
   });
   
-  // --- New listener for the "Back" button ---
+  // --- (Existing) New listener for the "Back" button ---
   const backButton = document.getElementById('back-btn');
   backButton.addEventListener('click', () => {
-    // Do the reverse: hide details, show main cards
     document.getElementById('details-container').style.display = 'none';
     document.getElementById('status-card').style.display = 'block';
     
-    // Only show locations if it was visible before
     const locationsList = document.getElementById('locations-list');
     if (locationsList.innerHTML !== '') {
       document.getElementById('locations-container').style.display = 'block';
@@ -56,21 +82,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadStatus() {
   try {
-    // Call the API using fetch
     const response = await fetch(`${API_URL}?action=getStatus`);
-    
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
-    
     const result = await response.json();
-    
     if (result.success) {
       showStatus(result.data);
     } else {
       throw new Error(result.error || 'Failed to parse data');
     }
-    
   } catch (error) {
     console.error('Error fetching status:', error);
     showStatus({ status: 'Error', locations: [], lastUpdated: 'No disponible' });
@@ -86,14 +107,13 @@ function showStatus(data) {
   const statusDiv = document.getElementById('status');
   const updatedDiv = document.getElementById('last-updated');
   
-  // --- Get new detail elements ---
   const detailSiren = document.getElementById('detail-siren-img');
-  const detailAlertName = document.getElementById('detail-alert-name'); // New
-  const detailActionButton = document.getElementById('detail-action-button'); // New
+  const detailAlertName = document.getElementById('detail-alert-name');
+  const detailActionButton = document.getElementById('detail-action-button');
 
-  const protocolText = document.getElementById('protocol'); // This will now be the first item in the detail-list
-  const stormRadiusText = document.getElementById('storm-radius'); // Renamed for clarity
-  const detailsText = document.getElementById('details'); // Renamed for clarity
+  const protocolText = document.getElementById('protocol');
+  const stormRadiusText = document.getElementById('storm-radius');
+  const detailsText = document.getElementById('details');
 
   // 1. Update Status Text
   statusDiv.innerText = status.replace('_', ' ');
@@ -102,22 +122,21 @@ function showStatus(data) {
   // 2. Update Status Card Color (for main view)
   statusCard.className = "mini-container status-card"; // Reset classes
   
-  // Reset detail view elements before setting new ones
-  detailSiren.style.display = 'block'; // Ensure siren is visible
-  detailAlertName.className = 'detail-h2'; // Reset text color class
-  detailActionButton.className = 'action-button'; // Reset button color class
-
+  // Reset detail view elements
+  detailSiren.style.display = 'block';
+  detailAlertName.className = 'detail-h2';
+  detailActionButton.className = 'action-button';
+  detailsText.innerHTML = ""; // Clear 3rd list item
 
   if (status == 'ROJA') {
     statusCard.classList.add('status-roja');
     detailAlertName.innerText = "Alerta Roja";
     detailActionButton.innerText = redProtocol;
-    detailActionButton.classList.add('red'); // Add red background to button
+    detailActionButton.classList.add('red');
     detailSiren.src = 'images/Red siren.png';
     protocolText.innerHTML = redItem1;
     stormRadiusText.innerHTML = redItem2; 
 
-    // ONLY vibrate if the status NEWLY changed to ROJA.
     if (status !== previousStatus && 'vibrate' in navigator) {
         navigator.vibrate([500, 100, 500]);
     }
@@ -151,10 +170,10 @@ function showStatus(data) {
   } 
   else if (status == 'PROBANDO') {
     statusCard.classList.add('status-probando');
-    detailAlertName.innerText = "Todo despejado";
-    detailActionButton.innerText = greenProtocol;
+    detailAlertName.innerText = "Modo Prueba"; // FIX: Was 'Todo despejado'
+    detailActionButton.innerText = probandoProtocol; // FIX: Was greenProtocol
     detailActionButton.classList.add('testing');
-    detailSiren.src = 'images/Blue siren.png'; // Assuming you have a blue one
+    detailSiren.src = 'images/Blue siren.png';
     protocolText.innerHTML = probandoItem1; 
     stormRadiusText.innerHTML = probandoItem2;
   } 
@@ -163,20 +182,17 @@ function showStatus(data) {
     statusDiv.innerText = 'Error al Cargar';
     detailAlertName.innerText = 'Error';
     detailActionButton.innerText = 'Sin Información';
-    detailActionButton.classList.add('status-error'); // Use a grey color for error
-    detailSiren.style.display = 'none'; // Hide siren on error
+    detailActionButton.classList.add('status-error');
+    detailSiren.style.display = 'none';
     protocolText.innerHTML = "No se pudo cargar la información de la alerta.";
     stormRadiusText.innerHTML = "";
-    detailsText.innerHTML = "";
   }
 
   // 3. Update Locations
   const locationsContainer = document.getElementById('locations-container');
   const locationsList = document.getElementById('locations-list');
-  
-  // --- ADD THIS LINE ---
-  // Get the details container to check if it's visible
   const detailsContainer = document.getElementById('details-container');
+  const infoView = document.getElementById('info-view'); // ADDED
   
   locationsList.innerHTML = ''; 
   
@@ -188,13 +204,20 @@ function showStatus(data) {
     });
 
     // --- MODIFIED CONDITION ---
-    // Only show locations if there are locations AND the details view is hidden.
-    if (detailsContainer.style.display === 'none') {
+    // Only show locations if:
+    // 1. There are locations
+    // 2. The details view is hidden
+    // 3. The info view is hidden
+    if (detailsContainer.style.display === 'none' && infoView.style.display === 'none') {
       locationsContainer.style.display = 'block';
+    } else {
+      locationsContainer.style.display = 'none'; // ADDED
     }
   } else {
     locationsContainer.style.display = 'none';
   }
+
+  previousStatus = status; // FIX: ADDED THIS LINE
   
   // 4. Auto-refresh
   setTimeout(loadStatus, 10000); // 10 seconds

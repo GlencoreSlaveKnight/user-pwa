@@ -1,21 +1,27 @@
 // --- 1. CHANGE THIS VERSION ---
-const CACHE_NAME = 'v6-antamina-alertas';
+const CACHE_NAME = 'v7-antamina-alertas'; // Incremented version
 const API_DOMAIN = 'script.google.com';
 
 const urlsToCache = [
   '/',
   '/index.html',
-  '/admin.html',
   '/style.css',
   '/app.js',
-  '/admin.js',
   '/manifest.json',
   '/images/Logo 192.png',
   '/images/Logo 512.png',
-  'https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap',
+  '/images/antamina-logo.png',
   
-  // --- 2. ADD THIS NEW LINE ---
-  '/images/antamina-logo.png'
+  // --- 2. ADDED ALL SIREN IMAGES ---
+  '/images/Red siren.png',
+  '/images/Orange siren.png',
+  '/images/Yellow siren.png',
+  '/images/Green siren.png',
+  '/images/Blue siren.png', // For "Probando"
+  
+  'https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'
+  
+  // --- 3. REMOVED admin.html and admin.js ---
 ];
 
 
@@ -50,24 +56,15 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const requestUrl = new URL(event.request.url);
 
-  // --- IMPORTANT ---
-  // If the request is for our API, always fetch it from the network.
-  // Never serve API calls from the cache, as we need live data.
   if (requestUrl.hostname === API_DOMAIN) {
     event.respondWith(fetch(event.request));
     return;
   }
   
-  // For all other requests (HTML, CSS, JS, Images), try cache first.
   event.respondWith(
     caches.match(event.request)
       .then(response => {
-        // If a match is found in the cache, return it
-        if (response) {
-          return response;
-        }
-        // If no match, fetch it from the network
-        return fetch(event.request);
+        return response || fetch(event.request);
       }
     )
   );

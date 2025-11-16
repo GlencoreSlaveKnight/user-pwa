@@ -287,3 +287,55 @@ h2 {
   color: #555; /* Default bullet color */
   font-weight: 700;
 }
+
+/* --- New Navigation Header Styles --- */
+.nav-header {
+  display: flex;
+  width: 100%;
+  max-width: 425px; /* Match mini-container width */
+  margin-bottom: 20px;
+  border-radius: 12px;
+  overflow: hidden; /* To make buttons fit radius */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.nav-button {
+  flex: 1; /* Make buttons equal width */
+  padding: 15px 10px;
+  font-size: 1.1em;
+  font-weight: 700;
+  color: #555;
+  background-color: #a4cddc;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-button.active {
+  background-color: #2596be; /* Active button color */
+  color: #fff;
+}
+
+.nav-button:first-child {
+  border-right: 1px solid #ddd;
+}
+
+/* --- New Information View Styles --- */
+.info-block {
+  text-align: center; /* Center siren, h2, and button */
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+.info-block:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.info-siren {
+  display: block;
+  max-width: 60px;
+  height: auto;
+  margin: 0 auto 10px auto;
+}
