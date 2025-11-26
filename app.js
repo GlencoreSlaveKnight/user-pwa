@@ -12,6 +12,8 @@ window.OneSignalDeferred.push(function(OneSignal) {
       enable: true, // This adds a bell icon to subscribe easily
     },
     allowLocalhostAsSecureOrigin: true,
+
+    serviceWorkerPath: 'sw.js',
   });
 });
 // --- END BLOCK ---
