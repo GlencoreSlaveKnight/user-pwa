@@ -19,7 +19,6 @@ const urlsToCache = [
   '/images/Orange siren.png',
   '/images/Yellow siren.png',
   '/images/Green siren.png',
-  '/images/Blue siren.png', // For "Probando"
   
   '/sounds/alarm.mp3',
   

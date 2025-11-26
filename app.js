@@ -189,7 +189,7 @@ function showStatus(data) {
     detailAlertName.innerText = "Modo Prueba";
     detailActionButton.innerText = probandoProtocol;
     detailActionButton.classList.add('testing');
-    detailSiren.src = 'images/Blue siren.png';
+    detailSiren.src = 'images/Green siren.png';
     protocolText.innerHTML = probandoItem1; 
     stormRadiusText.innerHTML = probandoItem2;
   } 
