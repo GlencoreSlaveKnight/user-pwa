@@ -1,5 +1,5 @@
 // --- IMPORTANT ---
-const API_URL = "https://script.google.com/macros/s/AKfycbw9HsdlY7057hnfXm06std0bjUecrM4ztlh25M1lxbdOYioP5xbsYNJm33L49aR85vJ6w/exec"; 
+const API_URL = "https://script.google.com/macros/s/AKfycbyHuAJrztW7wPzWYDya34NnoSiXomBYhQeBB9XqA6lmMFY1ShL7fcI8y-S_9ryDzxDAtA/exec"
 const alertSound = new Audio('sounds/alarm.mp3');
 
 // --- ONESIGNAL BLOCK ---
