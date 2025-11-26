@@ -1,19 +1,21 @@
 // --- IMPORTANT ---
-const API_URL = "https://script.google.com/macros/s/AKfycbyHuAJrztW7wPzWYDya34NnoSiXomBYhQeBB9XqA6lmMFY1ShL7fcI8y-S_9ryDzxDAtA/exec"
+const API_URL = "https://script.google.com/macros/s/AKfycbyHuAJrztW7wPzWYDya34NnoSiXomBYhQeBB9XqA6lmMFY1ShL7fcI8y-S_9ryDzxDAtA/exec";
 const alertSound = new Audio('sounds/alarm.mp3');
 
 // --- ONESIGNAL BLOCK ---
 window.OneSignalDeferred = window.OneSignalDeferred || [];
 window.OneSignalDeferred.push(function(OneSignal) {
   OneSignal.init({
-    appId: "023dcf63-6116-46d1-ad20-4eb1d83b3c52",
-    safari_web_id: "", // Leave empty if you don't have one
+    appId: "023dcf63-6116-46d1-ad20-4eb1d83b3c52", // Your App ID
+    safari_web_id: "", 
     notifyButton: {
-      enable: true, // This adds a bell icon to subscribe easily
+      enable: true, 
     },
     allowLocalhostAsSecureOrigin: true,
-
+    
+    // --- CRITICAL FIX ---
     serviceWorkerPath: 'sw.js',
+    // -------------------
   });
 });
 // --- END BLOCK ---
@@ -24,15 +26,19 @@ let previousStatus = null;
 const redProtocol = "EVACUAR";
 const redItem1 = "Se emite cuando se detectan rayos dentro del área crítica, entre 0 y 8 km.";
 const redItem2 = "Se suspenden inmediatamente todos los trabajos al aire libre y el personal debe dirigirse a los refugios identificados";
-const orangeProtocol = "SUSPENDER OPERACIONES"
+
+const orangeProtocol = "SUSPENDER OPERACIONES";
 const orangeItem1 = "Indica caída de rayos en el rango de 8 a 16 km.";
 const orangeItem2 = "Todo trabajo de izaje debe detenerse; si hay una carga suspendida, deberá asegurarse en una posición segura.";
-const yellowProtocol = "ATENTO A COMUNICACIONES"
+
+const yellowProtocol = "ATENTO A COMUNICACIONES";
 const yellowItem1 = "Se activa al detectar rayos entre 16 y 32 km de distancia.";
 const yellowItem2 = "Supervisores y trabajadores deben mantener observación constante del cielo y estar atentos a las comunicaciones radiales.";
-const greenProtocol = "RESUMIR LABORES"
+
+const greenProtocol = "RESUMIR LABORES";
 const greenItem1 = "No se detectan rayos en un radio de 32 km";
 const greenItem2 = "Continuar con las operaciones, no se requiere ninguna acción";
+
 const probandoProtocol = "PRUEBA";
 const probandoItem1 = "Esta es una alerta de prueba del sistema.";
 const probandoItem2 = "Continuar con las operaciones, no se requiere ninguna acción";
@@ -55,20 +61,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- "Inicio" tab click listener ---
   navInicio.addEventListener('click', () => {
-    // Set button active
     navInicio.classList.add('active');
     navInfo.classList.remove('active');
-    // Show/hide views
     homeView.style.display = 'block';
     infoView.style.display = 'none';
   });
 
   // --- "Información" tab click listener ---
   navInfo.addEventListener('click', () => {
-    // Set button active
     navInfo.classList.add('active');
     navInicio.classList.remove('active');
-    // Show/hide views
     infoView.style.display = 'block';
     homeView.style.display = 'none';
   });
@@ -78,12 +80,11 @@ document.addEventListener('DOMContentLoaded', () => {
   
   infoBlocks.forEach(block => {
     block.addEventListener('click', () => {
-      // This toggles the 'active' class on the block you tapped
       block.classList.toggle('active');
     });
   });
 
-  // --- (Existing) Click listener for the status card ---
+  // --- Click listener for the status card ---
   const statusCard = document.getElementById('status-card');
   statusCard.addEventListener('click', () => {
     document.getElementById('status-card').style.display = 'none';
@@ -92,11 +93,12 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Status card tapped, vibration enabled.');
   });
 
-  alertSound.play();
+  // --- Audio Preload Hack (Run on load) ---
+  alertSound.play().catch(() => {}); // Catch error if browser blocks it
   alertSound.pause();
   alertSound.currentTime = 0;
   
-  // --- (Existing) New listener for the "Back" button ---
+  // --- Listener for the "Back" button ---
   const backButton = document.getElementById('back-btn');
   backButton.addEventListener('click', () => {
     document.getElementById('details-container').style.display = 'none';
@@ -151,14 +153,14 @@ function showStatus(data) {
   statusDiv.innerText = status.replace('_', ' ');
   updatedDiv.innerText = "Última actualización: " + lastUpdated;
   
-  // 2. Update Status Card Color (for main view)
+  // 2. Update Status Card Color
   statusCard.className = "mini-container status-card"; // Reset classes
   
   // Reset detail view elements
   detailSiren.style.display = 'block';
   detailAlertName.className = 'detail-h2';
   detailActionButton.className = 'action-button';
-  detailsText.innerHTML = ""; // Clear 3rd list item
+  detailsText.innerHTML = ""; 
 
   if (status == 'ROJA') {
     statusCard.classList.add('status-roja');
@@ -169,13 +171,13 @@ function showStatus(data) {
     protocolText.innerHTML = redItem1;
     stormRadiusText.innerHTML = redItem2; 
 
+    // Sound and Vibration Logic
     if (status !== previousStatus){     
       if ('vibrate' in navigator){  
        navigator.vibrate([500, 200, 500, 200, 500]);
       }
-      alertSound.play();
+      alertSound.play().catch(e => console.log("Sound play failed", e));
     }
-
   } 
   else if (status == 'NARANJA') {
     statusCard.classList.add('status-naranja');
@@ -206,8 +208,8 @@ function showStatus(data) {
   } 
   else if (status == 'PROBANDO') {
     statusCard.classList.add('status-probando');
-    detailAlertName.innerText = "Modo Prueba"; // FIX: Was 'Todo despejado'
-    detailActionButton.innerText = probandoProtocol; // FIX: Was greenProtocol
+    detailAlertName.innerText = "Modo Prueba";
+    detailActionButton.innerText = probandoProtocol;
     detailActionButton.classList.add('testing');
     detailSiren.src = 'images/Blue siren.png';
     protocolText.innerHTML = probandoItem1; 
@@ -224,11 +226,11 @@ function showStatus(data) {
     stormRadiusText.innerHTML = "";
   }
 
-  // 3. Update Locations
+  // 3. Update Locations logic
   const locationsContainer = document.getElementById('locations-container');
   const locationsList = document.getElementById('locations-list');
   const detailsContainer = document.getElementById('details-container');
-  const infoView = document.getElementById('info-view'); // ADDED
+  const infoView = document.getElementById('info-view'); 
   
   locationsList.innerHTML = ''; 
   
@@ -239,22 +241,17 @@ function showStatus(data) {
       locationsList.appendChild(li);
     });
 
-    // --- MODIFIED CONDITION ---
-    // Only show locations if:
-    // 1. There are locations
-    // 2. The details view is hidden
-    // 3. The info view is hidden
     if (detailsContainer.style.display === 'none' && infoView.style.display === 'none') {
       locationsContainer.style.display = 'block';
     } else {
-      locationsContainer.style.display = 'none'; // ADDED
+      locationsContainer.style.display = 'none';
     }
   } else {
     locationsContainer.style.display = 'none';
   }
 
-  previousStatus = status; // FIX: ADDED THIS LINE
+  previousStatus = status; 
   
   // 4. Auto-refresh
-  setTimeout(loadStatus, 10000); // 10 seconds
+  setTimeout(loadStatus, 10000); 
 }
