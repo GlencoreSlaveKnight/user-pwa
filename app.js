@@ -1,7 +1,22 @@
 // --- IMPORTANT ---
 const API_URL = "https://script.google.com/macros/s/AKfycbw9HsdlY7057hnfXm06std0bjUecrM4ztlh25M1lxbdOYioP5xbsYNJm33L49aR85vJ6w/exec"; 
-let previousStatus = null;
 const alertSound = new Audio('sounds/alarm.mp3');
+
+// --- ONESIGNAL BLOCK ---
+window.OneSignalDeferred = window.OneSignalDeferred || [];
+window.OneSignalDeferred.push(function(OneSignal) {
+  OneSignal.init({
+    appId: "023dcf63-6116-46d1-ad20-4eb1d83b3c52",
+    safari_web_id: "", // Leave empty if you don't have one
+    notifyButton: {
+      enable: true, // This adds a bell icon to subscribe easily
+    },
+    allowLocalhostAsSecureOrigin: true,
+  });
+});
+// --- END BLOCK ---
+
+let previousStatus = null;
 
 // --- Define all text content ---
 const redProtocol = "EVACUAR";
@@ -152,11 +167,13 @@ function showStatus(data) {
     protocolText.innerHTML = redItem1;
     stormRadiusText.innerHTML = redItem2; 
 
-    if (status !== previousStatus && 'vibrate' in navigator) {  
-      navigator.vibrate([500, 200, 500, 200, 500]);
+    if (status !== previousStatus){     
+      if ('vibrate' in navigator){  
+       navigator.vibrate([500, 200, 500, 200, 500]);
+      }
       alertSound.play();
     }
-    
+
   } 
   else if (status == 'NARANJA') {
     statusCard.classList.add('status-naranja');

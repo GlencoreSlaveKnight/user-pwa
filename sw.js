@@ -1,5 +1,7 @@
-// --- 1. CHANGE THIS VERSION ---
-const CACHE_NAME = 'v11-antamina-alertas'; // Incremented version
+importScripts('https://cdn.onesignal.com/sdks/web/v16/OneSignalSDKWorker.js');
+
+// --- 1. CHANGE THIS VERSION TO UPDATE LOCAL CACHE IN DEVICES ---
+const CACHE_NAME = 'v12-antamina-alertas'; // Incremented version
 const API_DOMAIN = 'script.google.com';
 
 const urlsToCache = [
