@@ -7,7 +7,6 @@
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="style.css">
     
-    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
     <script>
       window.OneSignalDeferred = window.OneSignalDeferred || [];
       window.OneSignalDeferred.push(function(OneSignal) {
@@ -18,13 +17,14 @@
             enable: true,
           },
           allowLocalhostAsSecureOrigin: true,
-          // This tells OneSignal to use YOUR worker, not the default one
-          serviceWorkerPath: 'sw.js', 
-          serviceWorkerParam: { scope: '/' } 
+          // REMOVED: serviceWorkerPath (We are using the default name now)
         });
       });
     </script>
-    </head>
+    
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    
+  </head>
   <body>
     <div class="main-wrapper">
       <div class="logo-wrapper">
@@ -59,7 +59,6 @@
       </div>
 
       <div id="info-view" class="mini-container" style="display: none;">
-
         <div class="info-block info-block-clickable">
           <img src="images/Red siren.png" alt="Siren Icon" class="info-siren">
           <h2 class="detail-h2 text-roja">Alerta Roja</h2> 
@@ -69,7 +68,6 @@
             <li>Se suspenden inmediatamente todos los trabajos al aire libre y el personal debe dirigirse a los refugios identificados</li>
           </ul>
         </div>
-
         <div class="info-block info-block-clickable">
           <img src="images/Orange siren.png" alt="Siren Icon" class="info-siren">
           <h2 class="detail-h2 text-naranja">Alerta Naranja</h2> 
@@ -79,7 +77,6 @@
             <li>Suspender trabajos a la intemperie cuyo acceso a los refugios contra tormentas se encuentren a más de 100 mts.</li>
           </ul>
         </div>
-
         <div class="info-block info-block-clickable">
           <img src="images/Yellow siren.png" alt="Siren Icon" class="info-siren">
           <h2 class="detail-h2 text-amarilla">Alerta Amarilla</h2> 
@@ -89,7 +86,6 @@
             <li>Supervisores y trabajadores deben mantener observación constante del cielo y estar atentos a las comunicaciones radiales.</li>
           </ul>
         </div>
-
         <div class="info-block info-block-clickable">
           <img src="images/Green siren.png" alt="Siren Icon" class="info-siren">
           <h2 class="detail-h2 text-green">Todo Despejado</h2> 
@@ -99,7 +95,6 @@
             <li>Proceder con las labores.</li>
           </ul>
         </div>
-
       </div>      
     
       <div class="nav-header">

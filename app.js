@@ -28,13 +28,9 @@ const probandoItem2 = "Continuar con las operaciones, no se requiere ninguna acc
 
 document.addEventListener('DOMContentLoaded', () => {
   
-  // Register the service worker
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js')
-      .then(reg => console.log('Service Worker registered', reg))
-      .catch(err => console.error('Service Worker registration failed', err));
-  }
-
+  // --- REMOVED MANUAL SERVICE WORKER REGISTRATION ---
+  // OneSignal will now automatically register 'OneSignalSDKWorker.js'
+  
   // --- Get navigation elements ---
   const navInicio = document.getElementById('nav-inicio');
   const navInfo = document.getElementById('nav-info');
@@ -76,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --- Audio Preload Hack (Run on load) ---
-  alertSound.play().catch(() => {}); // Catch error if browser blocks it
+  alertSound.play().catch(() => {}); 
   alertSound.pause();
   alertSound.currentTime = 0;
   
