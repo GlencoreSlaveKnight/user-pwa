@@ -2,26 +2,6 @@
 const API_URL = "https://script.google.com/macros/s/AKfycbyHuAJrztW7wPzWYDya34NnoSiXomBYhQeBB9XqA6lmMFY1ShL7fcI8y-S_9ryDzxDAtA/exec";
 const alertSound = new Audio('sounds/alarm.mp3');
 
-// --- ONESIGNAL BLOCK ---
-window.OneSignalDeferred = window.OneSignalDeferred || [];
-window.OneSignalDeferred.push(function(OneSignal) {
-  OneSignal.init({
-    appId: "023dcf63-6116-46d1-ad20-4eb1d83b3c52", // Your App ID
-    safari_web_id: "", 
-    notifyButton: {
-      enable: true, 
-    },
-    allowLocalhostAsSecureOrigin: true,
-    
-    // --- CRITICAL FIX ---
-    serviceWorkerPath: 'sw.js',
-    // -------------------
-
-    serviceWorkerParam: { scope: '/' }
-  });
-});
-// --- END BLOCK ---
-
 let previousStatus = null;
 
 // --- Define all text content ---
