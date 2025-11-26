@@ -16,6 +16,8 @@ window.OneSignalDeferred.push(function(OneSignal) {
     // --- CRITICAL FIX ---
     serviceWorkerPath: 'sw.js',
     // -------------------
+
+    serviceWorkerParam: { scope: '/' }
   });
 });
 // --- END BLOCK ---
