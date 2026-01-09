@@ -10,8 +10,8 @@ const urlsToCache = [
   '/style.css',
   '/app.js',
   '/manifest.json',
-  '/images/Logo 192.png',
-  '/images/Logo 512.png',
+  '/images/Logo_192.png',
+  '/images/Logo_512.png',
   '/images/antamina-logo.png',
   
   // --- 2. ADDED ALL SIREN IMAGES ---

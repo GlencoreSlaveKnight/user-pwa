@@ -1,5 +1,5 @@
 // --- IMPORTANT ---
-const API_URL = "https://script.google.com/macros/s/AKfycbx_hCG80xwAxjwBRlvot_DeqcD78Kah2TGFC_wvC-oJFYs2nTyJ7tHQTqtZUMNNs5CO/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbws5769HvwY0Tswiv2F8JKeNLIG27aCYxzjZi5P4INUXt7j_UpCGfrlfvjzBEonb59TVA/exec";
 const alertSound = new Audio('sounds/alarm.mp3');
 
 let previousStatus = null;
